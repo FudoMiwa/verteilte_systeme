@@ -43,25 +43,21 @@ public class Person {
 	}
 
 	public void fromByteArray(byte[] array) throws Exception {
-		int i = 0;
+		int i = -1;
 		
-		int intervalLength = array[i];
-		
-		while (i++ < intervalLength ) 
+		while (array[++i] != -1 ) 
 			namensfeld = new String(new byte[] { array[i] }, "UTF-8") + namensfeld;
 
 		String sZahl = "";
-		intervalLength += array[i]+1;
 		
-		while (i++ < intervalLength ) 
+		while (array[++i] != -1 ) 
 			sZahl = new String(new byte[] { array[i] }, "UTF-8") + sZahl;
 		
 		zahl = Integer.parseInt(sZahl, 10);
 		
 		sZahl = "";
-		intervalLength += array[i]+1;
 		
-		while (i++ < intervalLength ) 
+		while (array[++i] != -1) 
 			sZahl = new String(new byte[] { array[i] }, "UTF-8") + sZahl;
 
 		geburtsdatum.setTime(Long.parseLong(sZahl, 10));
@@ -96,11 +92,10 @@ public class Person {
 		for (byte x : a)
 			ret[retIndex++] = x;
 		
-		ret[retIndex++] =  (byte) b.length;
-
 		for (byte x : b)
 			ret[retIndex++] = x;
 
+		ret[retIndex++] = -1;
 		return ret;
 	}
 	
@@ -111,8 +106,7 @@ public class Person {
 			throw new Exception("Checksummen stimmen nicht ueberein");
 		
 		String s = new String(in, "UTF-8");
-		
-		if(!(s.matches("\\d{1,}")))
+		if(!(s.matches("\\D{1,}.\\d{2,}.\\d{2,}.")))
 			throw new Exception("Plausblitaetspruefung nicht bestanden");
 	}
 
@@ -139,15 +133,9 @@ public class Person {
 		
 		try {
 			validate(p1Data, checksum);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
 			p2.fromByteArray(p1Data);
-		} catch (Exception e) {e.printStackTrace();}
-
+		} catch (Exception e1) {e1.printStackTrace();}
+		
 		SimpleDateFormat sdf = new SimpleDateFormat();
 
 		System.out.println("--> P1");
