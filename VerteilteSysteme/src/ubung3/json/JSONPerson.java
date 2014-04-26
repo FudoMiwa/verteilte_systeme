@@ -39,13 +39,13 @@ public class JSONPerson {
 		
 		try {
 			byte[] temp = namensfeld.getBytes("UTF-8");
-			ret = combineArrays(ret, toLittleEndian(temp));
+			ret = combineArrays(ret, temp);
 
 			temp = Integer.toString(zahl).getBytes("UTF-8");
-			ret = combineArrays(ret, toLittleEndian(temp));
+			ret = combineArrays(ret, temp);
 
 			temp = Long.toString(geburtsdatum.getTime()).getBytes("UTF-8");
-			ret = combineArrays(ret, toLittleEndian(temp));
+			ret = combineArrays(ret, temp);
 		} catch (Exception e) {e.printStackTrace();}
 		
 		return ret;
@@ -70,20 +70,6 @@ public class JSONPerson {
 			sZahl = new String(new byte[] { array[i] }, "UTF-8") + sZahl;
 
 		geburtsdatum.setTime(Long.parseLong(sZahl, 10));
-	}
-
-	/**
-	 * Dreht den Inhalt des Arrays um. abc --> bca
-	 * @param byte[] in
-	 * @return
-	 */
-	private static byte[] toLittleEndian(byte[] in) {
-		byte[] ret = new byte[in.length];
-
-		for (int i = 0, j = in.length - 1; i < ret.length; i++, j--)
-			ret[i] = in[j];
-
-		return ret;
 	}
 
 	/**
@@ -118,9 +104,9 @@ public class JSONPerson {
 	public static void writeIntoFile(String name, int zahl, long geburtsdatum, String dateiname){
 		JSONObject obj = new JSONObject();
 		
-		obj.put("Name: ", name);
-		obj.put("Nummer: ", zahl);
-		obj.put("Datum: ", geburtsdatum);
+		obj.put("Name", name);
+		obj.put("Nummer", zahl);
+		obj.put("Datum", geburtsdatum);
 		
 		BufferedWriter bw;
 		
@@ -180,11 +166,11 @@ public class JSONPerson {
 		GregorianCalendar gebdatum = new GregorianCalendar(1990, Calendar.SEPTEMBER, 06);
 		
 		writeIntoFile("Meisterin Herzlos", 21, gebdatum.getTimeInMillis(), "person.txt");
-		//System.out.println(getName(filepath, "Name: "));
-		//System.out.println(getZahl(filepath, "Nummer: "));
-		//System.out.println(getGeburtsdatum(filepath, "Datum: "));
+		//System.out.println(getName(filepath, "Name"));
+		//System.out.println(getZahl(filepath, "Nummer"));
+		//System.out.println(getGeburtsdatum(filepath, "Datum"));
 		
-		JSONPerson p1 = new JSONPerson(getName(filepath, "Name: "), getZahl(filepath, "Nummer: "), getGeburtsdatum(filepath, "Datum: "));
+		JSONPerson p1 = new JSONPerson(getName(filepath, "Name"), getZahl(filepath, "Nummer"), getGeburtsdatum(filepath, "Datum"));
 		JSONPerson p2 = new JSONPerson();
 		
 		byte[] p1Data = p1.toByteArray();
