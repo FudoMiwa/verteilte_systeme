@@ -65,7 +65,7 @@ public class Person {
 
 	/**
 	 * Dreht den Inhalt des Arrays um. abc --> bca
-	 * @param in
+	 * @param byte[] in
 	 * @return
 	 */
 	private static byte[] toLittleEndian(byte[] in) {
@@ -78,10 +78,10 @@ public class Person {
 	}
 
 	/**
-	 * Konkateniert 2 Arrays. a + b = ab.
-	 * @param a
-	 * @param b
-	 * @return
+	 * Konkateniert zwei Arrays. a + b = ab.
+	 * @param byte[] a
+	 * @param byte[] b
+	 * @return byte[] ret
 	 * @throws UnsupportedEncodingException 
 	 */
 	private static byte[] combineArrays(byte[] a, byte[] b) throws UnsupportedEncodingException {
@@ -99,6 +99,12 @@ public class Person {
 		return ret;
 	}
 	
+	/**
+	 * Prueft zwei Arrays anhand MD5 Checksumme auf Gleichheit. Die Checksummen muessen uebereinstimmen.
+	 * @param in
+	 * @param checksum1
+	 * @throws Exception 
+	 */
 	private static void validate(byte[] in, byte[] checksum1) throws Exception{
 		MessageDigest md5 = MessageDigest.getInstance("MD5");
 
@@ -110,6 +116,11 @@ public class Person {
 			throw new Exception("Plausblitaetspruefung nicht bestanden");
 	}
 
+	/**
+	 * Bildet die MD5 Checksumme eines Arrays.
+	 * @param byte[] in
+	 * @return byte[] ret
+	 */
 	private static byte[] createChecksum(byte[] in){
 		byte[] ret = null;
 		
@@ -147,5 +158,6 @@ public class Person {
 		System.out.println("Name: " + p2.namensfeld);
 		System.out.println("Zahl: " + p2.zahl);
 		System.out.println("Geburtsdatum: " + sdf.format(p2.geburtsdatum));
+		
 	}
 }
