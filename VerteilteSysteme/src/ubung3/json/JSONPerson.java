@@ -162,7 +162,7 @@ public class JSONPerson {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		String filepath = "C:\\Users\\Philipp\\git\\verteilte_systeme\\VerteilteSysteme\\person.txt";
+		String filepath = "D:\\Programmierung\\JavaGit\\verteilte_systeme\\VerteilteSysteme\\person.txt";
 		GregorianCalendar gebdatum = new GregorianCalendar(1990, Calendar.SEPTEMBER, 06);
 		
 		writeIntoFile("Meisterin Herzlos", 21, gebdatum.getTimeInMillis(), "person.txt");

@@ -1,26 +1,17 @@
 package handler;
 
 
+import java.rmi.RemoteException;
 import javax.faces.bean.ManagedBean;
-
-import database.Database;
+import database.DBUtil;
 
 
 
 @ManagedBean
 public class NamenHandler {
 
-	private long nameID;
 	private String name;
-	Database db = new Database();
-	
-	public long getNameID(){
-		return this.nameID;
-	}
-	
-	public void setNameID(long nameID){
-		this.nameID = nameID;
-	}
+		
 	
 	public String getName(){
 		return this.name;
@@ -30,12 +21,20 @@ public class NamenHandler {
 		this.name = name;
 	}
 	
-	
+	/**
+	 * Insert data into database. Return next page.
+	 * @return ausgabe.xhtlm 
+	 */
 	public String speichern(){
-		db.recordNewName(getName());
+		try{
+			DBUtil.getStub().recordNewName(getName());
+		}catch(RemoteException e){
+			e.printStackTrace();
+		}
 		return "/ausgabe.xhtml";
 	}
 	
 
 	
 }
+
